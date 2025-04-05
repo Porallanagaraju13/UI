@@ -1,0 +1,368 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotstar Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom CSS for things Tailwind can't handle easily */
+        .hero-section {
+            background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.1)), url('https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/background/HS_banner_bg_web.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+        }
+        
+        .content-card:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 800px;
+            animation: zoom 0.3s;
+        }
+        
+        @keyframes zoom {
+            from {transform: scale(0.1)} 
+            to {transform: scale(1)}
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navbar -->
+    <nav class="bg-black bg-opacity-80 fixed w-full z-10">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-8">
+                <a href="#" class="text-red-500 font-bold text-3xl">HOTSTAR</a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#" class="hover:text-red-500">TV</a>
+                    <a href="#" class="hover:text-red-500">Movies</a>
+                    <a href="#" class="hover:text-red-500">Sports</a>
+                    <a href="#" class="hover:text-red-500">Disney+</a>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative hidden md:block">
+                    <input type="text" placeholder="Search" class="bg-gray-800 rounded-full py-1 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <i class="fas fa-search absolute left-3 top-2 text-gray-400"></i>
+                </div>
+                <button class="bg-red-600 hover:bg-red-700 px-4 py-1 rounded-md font-medium">SUBSCRIBE</button>
+                <a href="#" class="text-lg"><i class="fas fa-user-circle"></i></a>
+                <button class="md:hidden" id="mobile-menu-button">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden bg-black bg-opacity-90 w-full py-3 px-4" id="mobile-menu">
+            <div class="flex flex-col space-y-3">
+                <a href="#" class="hover:text-red-500">TV</a>
+                <a href="#" class="hover:text-red-500">Movies</a>
+                <a href="#" class="hover:text-red-500">Sports</a>
+                <a href="#" class="hover:text-red-500">Disney+</a>
+                <div class="relative">
+                    <input type="text" placeholder="Search" class="bg-gray-800 rounded-full py-1 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <i class="fas fa-search absolute left-3 top-2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section pt-16 flex items-center">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl">
+                <h1 class="text-5xl font-bold mb-4">The Mandalorian</h1>
+                <p class="text-lg mb-6">After the fall of the Galactic Empire, a lone gunfighter makes his way through the lawless outer reaches of the galaxy.</p>
+                <div class="flex space-x-4">
+                    <button class="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-md font-medium flex items-center">
+                        <i class="fas fa-play mr-2"></i> Watch Now
+                    </button>
+                    <button class="bg-gray-800 hover:bg-gray-700 px-6 py-2 rounded-md font-medium flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i> More Info
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Sections -->
+    <div class="container mx-auto px-4 py-12">
+        <!-- Recommended For You -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Recommended For You</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Content cards -->
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/eW7Twd85m2g')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/4166/1770004166/1770004166-h" alt="Loki" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Loki</h3>
+                        <p class="text-sm text-gray-400">S1 • 2021</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/d9MyW72ELq0')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/2478/1770002478/1770002478-h" alt="Avengers: Endgame" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Avengers: Endgame</h3>
+                        <p class="text-sm text-gray-400">2019</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/XqZsoesa55w')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/2478/1770002478/1770002478-h" alt="Baby Shark" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Baby Shark</h3>
+                        <p class="text-sm text-gray-400">2021</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/5PSNL1qE6VY')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/4166/1770004166/1770004166-h" alt="Avatar" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Avatar</h3>
+                        <p class="text-sm text-gray-400">2009</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/JfVOs4VSpmA')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/2478/1770002478/1770002478-h" alt="Spiderman" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Spiderman</h3>
+                        <p class="text-sm text-gray-400">2021</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/6ZfuNTqbHE8')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/4166/1770004166/1770004166-h" alt="Avengers: Infinity War" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Avengers: Infinity War</h3>
+                        <p class="text-sm text-gray-400">2018</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Shows -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Popular Shows</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/HhesaQXLuRY')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/4166/1770004166/1770004166-h" alt="The Falcon and the Winter Soldier" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">The Falcon and the Winter Soldier</h3>
+                        <p class="text-sm text-gray-400">S1 • 2021</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/7TavVZMewpY')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/2478/1770002478/1770002478-h" alt="WandaVision" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">WandaVision</h3>
+                        <p class="text-sm text-gray-400">S1 • 2021</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/xjDjIWPwcPU')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/4166/1770004166/1770004166-h" alt="The Simpsons" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">The Simpsons</h3>
+                        <p class="text-sm text-gray-400">S32 • 2021</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/KPLWWIOCOOQ')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/2478/1770002478/1770002478-h" alt="Modern Family" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Modern Family</h3>
+                        <p class="text-sm text-gray-400">S11 • 2020</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/s7EdQ4FqbhY')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/4166/1770004166/1770004166-h" alt="The Big Bang Theory" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">The Big Bang Theory</h3>
+                        <p class="text-sm text-gray-400">S12 • 2019</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/YQeUmSD1c3g')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/2478/1770002478/1770002478-h" alt="Friends" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Friends</h3>
+                        <p class="text-sm text-gray-400">S10 • 2004</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Releases -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">New Releases</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/5P8R2zAhEwg')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/4166/1770004166/1770004166-h" alt="Black Widow" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Black Widow</h3>
+                        <p class="text-sm text-gray-400">2021</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/giWIr7U1deA')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/2478/1770002478/1770002478-h" alt="Shang-Chi" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Shang-Chi</h3>
+                        <p class="text-sm text-gray-400">2021</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/x_me3xsvDgk')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/4166/1770004166/1770004166-h" alt="Eternals" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Eternals</h3>
+                        <p class="text-sm text-gray-400">2021</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/RlOB3UALvrQ')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/2478/1770002478/1770002478-h" alt="Cruella" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Cruella</h3>
+                        <p class="text-sm text-gray-400">2021</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/odM92ap8_c0')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/4166/1770004166/1770004166-h" alt="Raya and the Last Dragon" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Raya and the Last Dragon</h3>
+                        <p class="text-sm text-gray-400">2021</p>
+                    </div>
+                </div>
+                <div class="content-card rounded overflow-hidden cursor-pointer" onclick="openModal('https://www.youtube.com/embed/5VYb3B1ETlk')">
+                    <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/old_images/MOVIE/2478/1770002478/1770002478-h" alt="Luca" class="w-full h-auto">
+                    <div class="p-2 bg-gray-800">
+                        <h3 class="font-medium">Luca</h3>
+                        <p class="text-sm text-gray-400">2021</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <iframe id="videoFrame" width="100%" height="450" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4">HOTSTAR</h3>
+                    <div class="flex space-x-4">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="font-bold mb-3">Company</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Terms of Use</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-3">Help</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white">Account</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Plans</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Supported Devices</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-3">Browse</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white">TV Shows</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Movies</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Sports</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Kids</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2023 Hotstar. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Video modal functions
+        function openModal(videoUrl) {
+            const modal = document.getElementById('videoModal');
+            const videoFrame = document.getElementById('videoFrame');
+            
+            videoFrame.src = videoUrl;
+            modal.style.display = "block";
+            
+            // Pause video when modal is closed
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    closeModal();
+                }
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('videoModal');
+            const videoFrame = document.getElementById('videoFrame');
+            
+            videoFrame.src = "";
+            modal.style.display = "none";
+        }
+
+        // Sticky navbar on scroll
+        window.onscroll = function() {
+            const navbar = document.querySelector('nav');
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        };
+    </script>
+</body>
+</html>
